@@ -27,3 +27,27 @@ class Solution:
         valid_losers = [key for (key,value) in losers.items() if value != 0]
         return [sorted(valid_winners), sorted(valid_losers)]
         
+
+# Non naive lc solution
+from collections import defaultdict
+class Solution:
+    def findWinners(self, matches: List[List[int]]) -> List[List[int]]:
+        losses = defaultdict(int)
+
+        # Logic loop thorugh matches,but the winners are just default 0 
+        for idx in range(len(matches)):
+            winner = matches[idx][0]
+            loser = matches[idx][1]
+
+            losses[winner] = losses.get(winner, 0)
+            losses[loser] += 1
+        zero = []
+        ones = []
+        for player, count in losses.items():
+            if count == 0:
+                zero.append(player)
+            elif count == 1:
+                ones.append(player)
+        return [sorted(zero), sorted(ones)]
+
+        
